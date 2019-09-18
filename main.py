@@ -30,10 +30,10 @@ def main():
     CIPHERTEXT=''
     for i in range (len(PLAINTEXT)):
         ROLLER_START[2]=chr(ord(ROLLER_START[2])+1) if(ord(ROLLER_START[2])+1<91) else chr(65)
-        if ord(ROLLER_START[1])==ord(ROLLER_ARROW[1])-1:
+        if ord(ROLLER_START[1])==ord(ROLLER_ARROW[1])-1:#如果中間的轉盤起始位置是指針位置前一個，最後一個轉盤跟中間轉盤都會動一格
             ROLLER_START[1]=chr(ord(ROLLER_START[1])+1)
             ROLLER_START[0]=chr(ord(ROLLER_START[0])+1)
-        if ROLLER_START[2]==ROLLER_ARROW[2]:
+        if ROLLER_START[2]==ROLLER_ARROW[2]:#每輸入一個動一格
             ROLLER_START[1]=chr(ord(ROLLER_START[1])+1)
         in_put = PLUGBOARD[ord(PLAINTEXT[i])-65]
         in_one = roller(ROLLER_THEREE,ord(ROLLER_START[2])-65,ord(in_put)-65,1,PLAINTEXT[i])
