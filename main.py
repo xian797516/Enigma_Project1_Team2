@@ -53,7 +53,7 @@ def main():
                             ROLLER_START_TEMP[2]=ROLLER_START[2]
                             for i in range (len(PLAINTEXT)):
                                 ROLLER_START_TEMP[2] = chr(ord(ROLLER_START_TEMP[2])+1) if(ord(ROLLER_START_TEMP[2])+1<91) else chr(65)
-                                if ord(ROLLER_START_TEMP[1]) == ord(ROLLER_ARROW[1])-1:#如果中間的轉盤起始位置是指針位置前一個，最後一個轉盤跟中間轉盤都會動一格
+                                if ord(ROLLER_START_TEMP[1]) == (ord(ROLLER_ARROW[1])-1 || ord(ROLLER_ARROW[1] + 25)):#如果中間的轉盤起始位置是指針位置前一個，最後一個轉盤跟中間轉盤都會動一格(指針為A,起始位置為Z要另外處理)
                                     ROLLER_START_TEMP[1] = chr(ord(ROLLER_START_TEMP[1])+1)
                                     ROLLER_START_TEMP[0] = chr(ord(ROLLER_START_TEMP[0])+1)
                                 if ROLLER_START_TEMP[2] == ROLLER_ARROW[2]:#每輸入一個動一格
