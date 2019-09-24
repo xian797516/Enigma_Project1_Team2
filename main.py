@@ -65,7 +65,7 @@ def main():
     print(choose_roller, ROLLER_START, PLUGBOARD)
     ROLLER_START_TEMP = ['','','']
     roller_choose = [0,1,2,3,4]
-    for choose_roller_one in roller_choose:#3個轉盤變動且不重複
+    for choose_roller_one in roller_choose[1:]:#3個轉盤變動且不重複
         choose_roller[0] = choose_roller_one
         for choose_roller_two in roller_choose:
             if choose_roller_two == choose_roller_one:
