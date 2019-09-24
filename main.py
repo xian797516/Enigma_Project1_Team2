@@ -9,6 +9,8 @@ PLUGBOARD = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q'
 UKW_B = ['Y','R','U','H','Q','S','L','D','P','X','N','G','O','K','M','I','E','B','F','Z','C','W','V','J','A','T']#反射器
 PLAINTEXT = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"#明文
 
+choose_roller = [0,0,0]
+
 #只需改明文跟猜密文中有什麼字串
 
 def reflector(list, n):
@@ -28,8 +30,22 @@ def roller(ROLLER_LIST, start, turn, in_out, input):
     else:
         return PLAINTEXT[ROLLER_LIST.find(input)]
 
+def keyRead():
+    f = open('key.txt', 'r')
+    choose_roller[0] = int(f.read(1)) - 1
+    choose_roller[1] = int(f.read(1)) - 1
+    choose_roller[2] = int(f.read(1)) - 1
+    f.read(1)
+    ROLLER_START[0] = f.read(1)
+    ROLLER_START[1] = f.read(1)
+    ROLLER_START[2] = f.read(1)
+    f.read(1)
+    PLUGBOARD = f.read(26)
+
+
 def main():
-    choose_roller = [0,0,0]
+    keyRead()
+    print(choose_roller, ROLLER_START, PLUGBOARD)
     ROLLER_START_TEMP = ['','','']
     for choose_roller_one in range (5):#3個轉盤變動且不重複
         choose_roller[0] = choose_roller_one
