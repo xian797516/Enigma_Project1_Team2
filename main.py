@@ -64,13 +64,14 @@ def main():
     keyRead()
     print(choose_roller, ROLLER_START, PLUGBOARD)
     ROLLER_START_TEMP = ['','','']
-    for choose_roller_one in range (5):#3個轉盤變動且不重複
+    roller_choose = [0,1,2,3,4]
+    for choose_roller_one in roller_choose:#3個轉盤變動且不重複
         choose_roller[0] = choose_roller_one
-        for choose_roller_two in range (5):
+        for choose_roller_two in roller_choose:
             if choose_roller_two == choose_roller_one:
                 continue
             choose_roller[1] = choose_roller_two
-            for choose_roller_three in range (5):
+            for choose_roller_three in roller_choose:
                 if choose_roller_three == choose_roller_one or choose_roller_three == choose_roller_two:
                     continue
                 choose_roller[2] = choose_roller_three
