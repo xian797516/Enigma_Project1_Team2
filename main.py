@@ -12,7 +12,7 @@ ROLLER_START = ['H','D','X']#起始位置
 ROLLER_ARROW = ['R','F','W','K','A']#指針位置
 PLUGBOARD = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']#接線板
 UKW_B = ['Y','R','U','H','Q','S','L','D','P','X','N','G','O','K','M','I','E','B','F','Z','C','W','V','J','A','T']#反射器
-PLAINTEXT = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"#明文
+PLAINTEXT = "ZATVAWORBRQGRJSXZVNORWZBLORMEGRASLQLAFWXZYODVVTDHCIRDMNWOPNIXVKASIIIALOOSZXAMSYCQHYGPRLMSACGAWPCPAVZTMUUZCTJDVBUZAGFWMIVEZGBTLFIQDPPRZHDNKIPQHUGCXZM"#明文
 
 choose_roller = [0,0,0]
 
@@ -102,7 +102,7 @@ def main():
                                 out_one = roller(ROLLER[choose_roller[2]],ord(ROLLER_START_TEMP[2])-65,out_two,2,PLAINTEXT[i])
                                 out_put = PLUGBOARD.index(chr(out_one+65))
                                 CIPHERTEXT += chr(out_put+65)
-                            if CIPHERTEXT.find('CIW')is not -1:#猜測可能有的關鍵字，找到就印出轉盤哪3個、起始位置哪3個、密文
+                            if CIPHERTEXT.find('HEILHITLER', 138)is not -1:#猜測可能有的關鍵字，找到就印出轉盤哪3個、起始位置哪3個、密文
                                 print('roller:',choose_roller)
                                 print('start:',ROLLER_START)
                                 print('result:',CIPHERTEXT)
