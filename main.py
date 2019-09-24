@@ -101,6 +101,8 @@ def main():
                                 out_two = roller(ROLLER[choose_roller[1]],ord(ROLLER_START_TEMP[1])-65,out_three,2,PLAINTEXT[i])
                                 out_one = roller(ROLLER[choose_roller[2]],ord(ROLLER_START_TEMP[2])-65,out_two,2,PLAINTEXT[i])
                                 out_put = PLUGBOARD.index(chr(out_one+65))
+                                if out_put is not 'HEILHITLER'[i]:
+                                   break
                                 CIPHERTEXT += chr(out_put+65)
                             if CIPHERTEXT.find('HEILHITLER', 137)is not -1:#猜測可能有的關鍵字，找到就印出轉盤哪3個、起始位置哪3個、密文
                                 print('roller:',choose_roller)
