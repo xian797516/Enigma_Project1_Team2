@@ -83,10 +83,9 @@ def swap(_list,_change):
     return p_l_a
 
 def main():
-    count=0
     keyRead()
     fw=open('ans.txt','w')
-    print(choose_roller, ROLLER_START, PLUGBOARD)
+    #print(choose_roller, ROLLER_START, PLUGBOARD)
     ROLLER_START_TEMP = ['','','']
     roller_choose = [0,1,2,3,4]
     for choose_roller_one in roller_choose:#3個轉盤變動且不重複
@@ -99,16 +98,17 @@ def main():
                 if choose_roller_three == choose_roller_one or choose_roller_three == choose_roller_two:
                     continue
                 choose_roller[2] = choose_roller_three
-                for roller_start_one in range (26):#3個轉盤起始位置變動
-                    for roller_start_two in range (26):
-                        for roller_start_three in range (26):
+                print('--------',choose_roller)
+                for roller_start_one in range (A_TO_N['Z']+1):#3個轉盤起始位置變動
+                    for roller_start_two in range (A_TO_N['Z']+1):
+                        for roller_start_three in range (A_TO_N['Z']+1):
                             ROLLER_START[0] = N_TO_A[roller_start_one]
                             ROLLER_START[1] = N_TO_A[roller_start_two]
                             ROLLER_START[2] = N_TO_A[roller_start_three]
                             ROLLER_START_TEMP[0]=ROLLER_START[0]
                             ROLLER_START_TEMP[1]=ROLLER_START[1]
                             ROLLER_START_TEMP[2]=ROLLER_START[2]
-
+                            print('------',ROLLER_START)
                             change_0 = list(itertools.combinations(PLUGBOARD,2))
                             for p_change_0 in range(len(change_0)):
                                 plugboard_list_temp1,change_1 = plugboard_gen(PLUGBOARD,change_0[p_change_0])
@@ -164,8 +164,8 @@ def main():
                                                         fw.write('result:')
                                                         fw.write(CIPHERTEXT)
                                                         fw.write('\n')
-                                                        count+=1
-                                                        print(CIPHERTEXT,count)
+                                                        print('----',plugboard_list_ans)
+                                                        print('--',CIPHERTEXT)
 
 if __name__ == '__main__':
     main()
