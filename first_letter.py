@@ -20,7 +20,7 @@ GUESSTEXT = "HEILHITLER"
 
 A_TO_N = {'A':0,'B':1,'C':2,'D':3,'E':4,'F':5,'G':6,'H':7,'I':8,'J':9,'K':10,'L':11,'M':12,'N':13,'O':14,'P':15,'Q':16,'R':17,'S':18,'T':19,'U':20,'V':21,'W':22,'X':23,'Y':24,'Z':25}
 N_TO_A = {0:'A',1:'B',2:'C',3:'D',4:'E',5:'F',6:'G',7:'H',8:'I',9:'J',10:'K',11:'L',12:'M',13:'N',14:'O',15:'P',16:'Q',17:'R',18:'S',19:'T',20:'U',21:'V',22:'W',23:'X',24:'Y',25:'Z'}
-
+FILE = ['ans0.txt','ans1.txt','ans2.txt','ans3.txt','ans4.txt','ans5.txt','ans6.txt','ans7.txt','ans8.txt','ans9.txt']
 choose_roller = [0,0,0]
 
 #只需改明文跟猜密文中有什麼字串
@@ -95,7 +95,7 @@ def check_list(_list,_new):
 
 def main():
     keyRead()
-    fw=open('ans.txt','w')
+    fw=open('ans0.txt','w')
     fp=open('123.txt','w')
     count = 0
     #print(choose_roller, ROLLER_START, PLUGBOARD)
@@ -107,7 +107,7 @@ def main():
             if choose_roller_two == choose_roller_one:
                 continue
             choose_roller[1] = choose_roller_two
-            for choose_roller_three in roller_choose[3:4]:
+            for choose_roller_three in roller_choose[2:3]:
                 if choose_roller_three == choose_roller_one or choose_roller_three == choose_roller_two:
                     continue
                 choose_roller[2] = choose_roller_three
@@ -118,9 +118,12 @@ def main():
                             ROLLER_START[0] = N_TO_A[roller_start_one]
                             ROLLER_START[1] = N_TO_A[roller_start_two]
                             ROLLER_START[2] = N_TO_A[roller_start_three]
+                            #ROLLER_START[0]='A'
+                            #ROLLER_START[1]='H'
+                            #ROLLER_START[2]='W'
                             ROLLER_START_TEMP[0]=ROLLER_START[0]
                             ROLLER_START_TEMP[1]=ROLLER_START[1]
-                            ROLLER_START_TEMP[2]=ROLLER_START[2]
+                            ROLLER_START_TEMP[2]=ROLLER_START[2]                     
                             ROLLER_START_TEMP[2] = N_TO_A[A_TO_N[ROLLER_START_TEMP[2]]+1] if(A_TO_N[ROLLER_START_TEMP[2]]+1<26) else N_TO_A[0]#每輸入一個動一格
                             if A_TO_N[ROLLER_START_TEMP[1]] == (A_TO_N[ROLLER_ARROW[1]]-1 or A_TO_N[ROLLER_ARROW[1]]+25):#如果中間的轉盤起始位置是指針位置前一個，最後一個轉盤跟中間轉盤都會動一格(指針為A,起始位置為Z要另外處理)
                                 ROLLER_START_TEMP[1] = N_TO_A[A_TO_N[ROLLER_START_TEMP[1]]+1] if(A_TO_N[ROLLER_START_TEMP[1]]+1<26) else N_TO_A[0]
@@ -156,82 +159,85 @@ def main():
     fw.close()
  
 def second():  
-    fp = open('ans3.txt','r')
-    new = open('ans4.txt','w')
-    fw = open('count2.txt','w')
-    step = 0 #0 = 讀取指針位置 1 = 讀取接電板組合
-    count = 0
-    ROLLER_START_TEMP = ['','','']
-    roller_choose = [0,1,2,3,4]
-    for choose_roller_one in roller_choose[1:2]:#3個轉盤變動且不重複
-        choose_roller[0] = choose_roller_one
-        for choose_roller_two in roller_choose[0:1]:
-            if choose_roller_two == choose_roller_one:
-                continue
-            choose_roller[1] = choose_roller_two
-            for choose_roller_three in roller_choose[3:4]:
-                if choose_roller_three == choose_roller_one or choose_roller_three == choose_roller_two:
+    g = 1
+    while g<=9:
+        fp = open(FILE[g-1],'r')
+        new = open(FILE[g],'w')
+        fw = open('count2.txt','w')      
+        step = 0 #0 = 讀取指針位置 1 = 讀取接電板組合
+        count = 0
+        ROLLER_START_TEMP = ['','','']
+        roller_choose = [0,1,2,3,4]
+        for choose_roller_one in roller_choose[1:2]:#3個轉盤變動且不重複
+            choose_roller[0] = choose_roller_one
+            for choose_roller_two in roller_choose[0:1]:
+                if choose_roller_two == choose_roller_one:
                     continue
-                choose_roller[2] = choose_roller_three
-                print('--------',choose_roller)
-                for line in iter(fp):
-                    line = line.strip('\n')
-                    if line == str(-1) or line == '\n':
-                        step = 0
-                        if line == str(-1):
-                            new.write(str(-1))
-                            new.write(str('\n'))
+                choose_roller[1] = choose_roller_two
+                for choose_roller_three in roller_choose[3:4]:
+                    if choose_roller_three == choose_roller_one or choose_roller_three == choose_roller_two:
                         continue
-                    elif step == 0:
-                        ROLLER_START = line                
-                        ROLLER_START = ast.literal_eval(ROLLER_START)
-                        ROLLER_START_TEMP[0]=ROLLER_START[0]
-                        ROLLER_START_TEMP[1]=ROLLER_START[1]
-                        ROLLER_START_TEMP[2]=ROLLER_START[2]
-                        ROLLER_START_TEMP[2] = N_TO_A[A_TO_N[ROLLER_START_TEMP[2]]+1] if(A_TO_N[ROLLER_START_TEMP[2]]+1<26) else N_TO_A[0]#每輸入一個動一格
-                        if A_TO_N[ROLLER_START_TEMP[1]] == (A_TO_N[ROLLER_ARROW[1]]-1 or A_TO_N[ROLLER_ARROW[1]]+25):#如果中間的轉盤起始位置是指針位置前一個，最後一個轉盤跟中間轉盤都會動一格(指針為A,起始位置為Z要另外處理)
-                            ROLLER_START_TEMP[1] = N_TO_A[A_TO_N[ROLLER_START_TEMP[1]]+1] if(A_TO_N[ROLLER_START_TEMP[1]]+1<26) else N_TO_A[0]
-                            ROLLER_START_TEMP[0] = N_TO_A[A_TO_N[ROLLER_START_TEMP[0]]+1] if(A_TO_N[ROLLER_START_TEMP[0]]+1<26) else N_TO_A[0]
-                        if ROLLER_START_TEMP[2] == ROLLER_ARROW[2]:#
-                            ROLLER_START_TEMP[1] = N_TO_A[A_TO_N[ROLLER_START_TEMP[1]]+1] if(A_TO_N[ROLLER_START_TEMP[1]]+1<26) else N_TO_A[0]
-                        print('------',ROLLER_START_TEMP)
-                        new.write(str(ROLLER_START_TEMP))
-                        new.write('\n')
-                        count = count + 1
-                        step = 1
-                    elif step == 1:
-                        plugboard_list = ast.literal_eval(line)
-                        letter = list(PLAINTEXT[3])
-                        letter.append(PLUGBOARD)
-                        for List in itertools.product(*letter):
-                            plugboard_list_temp = plugboard_list
-                            i = check_list(plugboard_list_temp,List)
-                            if i==-1:
-                                continue
-                            elif i == 0:
-                                plugboard_list_temp.append(list(List))
-                            in_put = List[1]#輸入字母經過接線板後的字母
-                            in_one = roller(ROLLER[choose_roller[2]],A_TO_N[ROLLER_START_TEMP[2]],A_TO_N[in_put],1,PLAINTEXT[4])
-                            in_two = roller(ROLLER[choose_roller[1]],A_TO_N[ROLLER_START_TEMP[1]],in_one,1,PLAINTEXT[4])
-                            in_three = roller(ROLLER[choose_roller[0]],A_TO_N[ROLLER_START_TEMP[0]],in_two,1,PLAINTEXT[4])
-                            ref = A_TO_N[reflector(UKW_B,in_three)]
-                            out_three = roller(ROLLER[choose_roller[0]],A_TO_N[ROLLER_START_TEMP[0]],ref,2,PLAINTEXT[4])
-                            out_two = roller(ROLLER[choose_roller[1]],A_TO_N[ROLLER_START_TEMP[1]],out_three,2,PLAINTEXT[4])
-                            out_one = roller(ROLLER[choose_roller[2]],A_TO_N[ROLLER_START_TEMP[2]],out_two,2,PLAINTEXT[4])                                
-                            ans = [N_TO_A[out_one],GUESSTEXT[4]]
-                            test = check_list(list(plugboard_list_temp),ans)
-                            if -1 == test:
-                                continue
-                            elif 0 == test:
-                                plugboard_list_temp.append(ans)
-                            new.write(str(plugboard_list_temp))
+                    choose_roller[2] = choose_roller_three
+                    print('--------',choose_roller)
+                    for line in iter(fp):
+                        line = line.strip('\n')
+                        if line == str(-1) or line == '\n':
+                            step = 0
+                            if line == str(-1):
+                                new.write(str(-1))
+                                new.write(str('\n'))
+                            continue
+                        elif step == 0:
+                            ROLLER_START = line                
+                            ROLLER_START = ast.literal_eval(ROLLER_START)
+                            ROLLER_START_TEMP[0]=ROLLER_START[0]
+                            ROLLER_START_TEMP[1]=ROLLER_START[1]
+                            ROLLER_START_TEMP[2]=ROLLER_START[2]
+                            ROLLER_START_TEMP[2] = N_TO_A[A_TO_N[ROLLER_START_TEMP[2]]+1] if(A_TO_N[ROLLER_START_TEMP[2]]+1<26) else N_TO_A[0]#每輸入一個動一格
+                            if A_TO_N[ROLLER_START_TEMP[1]] == (A_TO_N[ROLLER_ARROW[1]]-1 or A_TO_N[ROLLER_ARROW[1]]+25):#如果中間的轉盤起始位置是指針位置前一個，最後一個轉盤跟中間轉盤都會動一格(指針為A,起始位置為Z要另外處理)
+                                ROLLER_START_TEMP[1] = N_TO_A[A_TO_N[ROLLER_START_TEMP[1]]+1] if(A_TO_N[ROLLER_START_TEMP[1]]+1<26) else N_TO_A[0]
+                                ROLLER_START_TEMP[0] = N_TO_A[A_TO_N[ROLLER_START_TEMP[0]]+1] if(A_TO_N[ROLLER_START_TEMP[0]]+1<26) else N_TO_A[0]
+                            if ROLLER_START_TEMP[2] == ROLLER_ARROW[2]:#
+                                ROLLER_START_TEMP[1] = N_TO_A[A_TO_N[ROLLER_START_TEMP[1]]+1] if(A_TO_N[ROLLER_START_TEMP[1]]+1<26) else N_TO_A[0]
+                            print('------',ROLLER_START_TEMP)
+                            new.write(str(ROLLER_START_TEMP))
                             new.write('\n')
-                        #new.write(str(-1))
-                        #new.write('\n')
-    fw.write(str(count))
-    fw.close
-    fp.close()
-    new.close()
+                            count = count + 1
+                            step = 1
+                        elif step == 1:
+                            plugboard_list = ast.literal_eval(line)
+                            letter = list(PLAINTEXT[g])
+                            letter.append(PLUGBOARD)
+                            for List in itertools.product(*letter):
+                                plugboard_list_temp = plugboard_list
+                                i = check_list(plugboard_list_temp,List)
+                                if i==-1:
+                                    continue
+                                elif i == 0:
+                                    plugboard_list_temp.append(list(List))
+                                in_put = List[1]#輸入字母經過接線板後的字母
+                                in_one = roller(ROLLER[choose_roller[2]],A_TO_N[ROLLER_START_TEMP[2]],A_TO_N[in_put],1,PLAINTEXT[g])
+                                in_two = roller(ROLLER[choose_roller[1]],A_TO_N[ROLLER_START_TEMP[1]],in_one,1,PLAINTEXT[g])
+                                in_three = roller(ROLLER[choose_roller[0]],A_TO_N[ROLLER_START_TEMP[0]],in_two,1,PLAINTEXT[g])
+                                ref = A_TO_N[reflector(UKW_B,in_three)]
+                                out_three = roller(ROLLER[choose_roller[0]],A_TO_N[ROLLER_START_TEMP[0]],ref,2,PLAINTEXT[g])
+                                out_two = roller(ROLLER[choose_roller[1]],A_TO_N[ROLLER_START_TEMP[1]],out_three,2,PLAINTEXT[g])
+                                out_one = roller(ROLLER[choose_roller[2]],A_TO_N[ROLLER_START_TEMP[2]],out_two,2,PLAINTEXT[g])                                
+                                ans = [N_TO_A[out_one],GUESSTEXT[g]]
+                                test = check_list(list(plugboard_list_temp),ans)
+                                if -1 == test:
+                                    continue
+                                elif 0 == test:
+                                    plugboard_list_temp.append(ans)
+                                new.write(str(plugboard_list_temp))
+                                new.write('\n')
+                            #new.write(str(-1))
+                            #new.write('\n')
+        g = g + 1
+        fw.write(str(count))
+        fw.close
+        fp.close()
+        new.close()
 
 
 
@@ -277,5 +283,5 @@ def second():
                 #                fw.write('\n')
 
 if __name__ == '__main__':
-    #main()
+    main()
     second()
