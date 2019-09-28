@@ -33,6 +33,7 @@ def roller(ROLLER_LIST, start, turn, in_out, input):
         return PLAINTEXT[ROLLER_LIST.find(input)]
 
 def main():
+    CIPHERTEXT = ''
     roller0_count = 0
     roller1_count = 0
     roller2_count = 0
