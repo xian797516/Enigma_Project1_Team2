@@ -1,5 +1,5 @@
 import itertools
-
+import ast
 ROLLER = [['E','K','M','F','L','G','D','Q','V','Z','N','T','O','W','Y','H','X','U','S','P','A','I','B','R','C','J'],
             ['A','J','D','K','S','I','R','U','X','B','L','H','W','T','M','C','Q','G','Z','N','P','Y','F','V','O','E'],
             ['B','D','F','H','J','L','C','P','R','T','X','V','Z','N','Y','E','I','W','G','A','K','M','U','S','Q','O'],
@@ -85,13 +85,19 @@ def swap(_list,_change):
 def check_list(_list,_new):
     for ori in _list:
         c = set(ori) & set(_new)
-        if(len(c) > 0):
+        if(len(c) == 1):
             return -1
+        elif(len(c) == 2):
+            return 2
+    if len(_list) == 6:
+        return -1
     return 0
 
 def main():
     keyRead()
     fw=open('ans.txt','w')
+    fp=open('123.txt','w')
+    count = 0
     #print(choose_roller, ROLLER_START, PLUGBOARD)
     ROLLER_START_TEMP = ['','','']
     roller_choose = [0,1,2,3,4]
@@ -115,18 +121,19 @@ def main():
                             ROLLER_START_TEMP[0]=ROLLER_START[0]
                             ROLLER_START_TEMP[1]=ROLLER_START[1]
                             ROLLER_START_TEMP[2]=ROLLER_START[2]
-                            print('------',ROLLER_START)
-                            fw.write(str(ROLLER_START))
+                            ROLLER_START_TEMP[2] = N_TO_A[A_TO_N[ROLLER_START_TEMP[2]]+1] if(A_TO_N[ROLLER_START_TEMP[2]]+1<26) else N_TO_A[0]#每輸入一個動一格
+                            if A_TO_N[ROLLER_START_TEMP[1]] == (A_TO_N[ROLLER_ARROW[1]]-1 or A_TO_N[ROLLER_ARROW[1]]+25):#如果中間的轉盤起始位置是指針位置前一個，最後一個轉盤跟中間轉盤都會動一格(指針為A,起始位置為Z要另外處理)
+                                ROLLER_START_TEMP[1] = N_TO_A[A_TO_N[ROLLER_START_TEMP[1]]+1] if(A_TO_N[ROLLER_START_TEMP[1]]+1<26) else N_TO_A[0]
+                                ROLLER_START_TEMP[0] = N_TO_A[A_TO_N[ROLLER_START_TEMP[0]]+1] if(A_TO_N[ROLLER_START_TEMP[0]]+1<26) else N_TO_A[0]
+                            if ROLLER_START_TEMP[2] == ROLLER_ARROW[2]:#
+                                ROLLER_START_TEMP[1] = N_TO_A[A_TO_N[ROLLER_START_TEMP[1]]+1] if(A_TO_N[ROLLER_START_TEMP[1]]+1<26) else N_TO_A[0]
+                            print('------',ROLLER_START_TEMP)
+                            count = count +1
+                            fw.write(str(ROLLER_START_TEMP))
                             fw.write('\n')
                             letter = ['I']
                             letter.append(PLUGBOARD)
                             for List in itertools.product(*letter):
-                                ROLLER_START_TEMP[2] = N_TO_A[A_TO_N[ROLLER_START_TEMP[2]]+1] if(A_TO_N[ROLLER_START_TEMP[2]]+1<26) else N_TO_A[0]#每輸入一個動一格
-                                if A_TO_N[ROLLER_START_TEMP[1]] == (A_TO_N[ROLLER_ARROW[1]]-1 or A_TO_N[ROLLER_ARROW[1]]+25):#如果中間的轉盤起始位置是指針位置前一個，最後一個轉盤跟中間轉盤都會動一格(指針為A,起始位置為Z要另外處理)
-                                    ROLLER_START_TEMP[1] = N_TO_A[A_TO_N[ROLLER_START_TEMP[1]]+1] if(A_TO_N[ROLLER_START_TEMP[1]]+1<26) else N_TO_A[0]
-                                    ROLLER_START_TEMP[0] = N_TO_A[A_TO_N[ROLLER_START_TEMP[0]]+1] if(A_TO_N[ROLLER_START_TEMP[0]]+1<26) else N_TO_A[0]
-                                if ROLLER_START_TEMP[2] == ROLLER_ARROW[2]:#
-                                   ROLLER_START_TEMP[1] = N_TO_A[A_TO_N[ROLLER_START_TEMP[1]]+1] if(A_TO_N[ROLLER_START_TEMP[1]]+1<26) else N_TO_A[0]
                                 in_put = List[1]#輸入字母經過接線板後的字母
                                 in_one = roller(ROLLER[choose_roller[2]],A_TO_N[ROLLER_START_TEMP[2]],A_TO_N[in_put],1,PLAINTEXT[0])
                                 in_two = roller(ROLLER[choose_roller[1]],A_TO_N[ROLLER_START_TEMP[1]],in_one,1,PLAINTEXT[0])
@@ -142,32 +149,20 @@ def main():
                                     c[1] = ans#ans輸出的組合
                                     fw.write(str(c))
                                     fw.write('\n')
-                                #out_put = plugboard_temp.index(N_TO_A[out_one])
-                                #print(enum,List)
-                                #if out_put is not A_TO_N[GUESSTEXT[0]]:
-                                #    break
-                                #CIPHERTEXT += N_TO_A[out_put]
-                                #if CIPHERTEXT.find(GUESSTEXT)is not -1:#猜測可能有的關鍵字，找到就印出轉盤哪3個、起始位置哪3個、密文
-                                #    fw.write('roller:')
-                                #    for c_r in range(len(choose_roller)):
-                                #        fw.write(str(choose_roller[c_r]))
-                                #        fw.write('\n')
-                                #        fw.write('start:')
-                                #    for R_S in range(len(ROLLER_START)):
-                                #        fw.write(ROLLER_START[R_S])
-                                #        fw.write('\n')
-                                #        fw.write('plugboard:')
-                                #    for p_l_a_ in range(len(plugboard_list_ans)):
-                                #        fw.write(plugboard_list_ans[p_l_a_])
-                                #        fw.write('\n')
-                                #        fw.write('result:')
-                                #        fw.write(CIPHERTEXT)
-                                #        fw.write('\n')
-                                #        print('----',plugboard_list_ans)
-                                #        print('--',CIPHERTEXT)     
+                            fw.write(str(-1))
+                            fw.write('\n')
+    fp.write(str(count))
+    fp.close()
+    fw.close()
+ 
 def second():  
-    fw = open('ans.txt',r)
-    new = open('ans1.txt',w)
+    fp = open('ans3.txt','r')
+    new = open('ans4.txt','w')
+    fw = open('count2.txt','w')
+    step = 0 #0 = 讀取指針位置 1 = 讀取接電板組合
+    count = 0
+    ROLLER_START_TEMP = ['','','']
+    roller_choose = [0,1,2,3,4]
     for choose_roller_one in roller_choose[1:2]:#3個轉盤變動且不重複
         choose_roller[0] = choose_roller_one
         for choose_roller_two in roller_choose[0:1]:
@@ -179,44 +174,108 @@ def second():
                     continue
                 choose_roller[2] = choose_roller_three
                 print('--------',choose_roller)
-                
-                for roller_start_one in range (A_TO_N['Z']+1):#3個轉盤起始位置變動
-                    for roller_start_two in range (A_TO_N['Z']+1):
-                        for roller_start_three in range (A_TO_N['Z']+1):
-                            ROLLER_START[0] = N_TO_A[roller_start_one]
-                            ROLLER_START[1] = N_TO_A[roller_start_two]
-                            ROLLER_START[2] = N_TO_A[roller_start_three]
-                            ROLLER_START_TEMP[0]=ROLLER_START[0]
-                            ROLLER_START_TEMP[1]=ROLLER_START[1]
-                            ROLLER_START_TEMP[2]=ROLLER_START[2]
-                            print('------',ROLLER_START)
-                            fw.write(str(ROLLER_START))
-                            fw.write('\n')
-                            letter = ['I']
-                            letter.append(PLUGBOARD)
-                            for enum ,List in itertools.product(*letter):
-                                ROLLER_START_TEMP[2] = N_TO_A[A_TO_N[ROLLER_START_TEMP[2]]+1] if(A_TO_N[ROLLER_START_TEMP[2]]+1<26) else N_TO_A[0]#每輸入一個動一格
-                                if A_TO_N[ROLLER_START_TEMP[1]] == (A_TO_N[ROLLER_ARROW[1]]-1 or A_TO_N[ROLLER_ARROW[1]]+25):#如果中間的轉盤起始位置是指針位置前一個，最後一個轉盤跟中間轉盤都會動一格(指針為A,起始位置為Z要另外處理)
-                                    ROLLER_START_TEMP[1] = N_TO_A[A_TO_N[ROLLER_START_TEMP[1]]+1] if(A_TO_N[ROLLER_START_TEMP[1]]+1<26) else N_TO_A[0]
-                                    ROLLER_START_TEMP[0] = N_TO_A[A_TO_N[ROLLER_START_TEMP[0]]+1] if(A_TO_N[ROLLER_START_TEMP[0]]+1<26) else N_TO_A[0]
-                                if ROLLER_START_TEMP[2] == ROLLER_ARROW[2]:#
-                                   ROLLER_START_TEMP[1] = N_TO_A[A_TO_N[ROLLER_START_TEMP[1]]+1] if(A_TO_N[ROLLER_START_TEMP[1]]+1<26) else N_TO_A[0]
-                                in_put = List#輸入字母經過接線板後的字母
-                                in_one = roller(ROLLER[choose_roller[2]],A_TO_N[ROLLER_START_TEMP[2]],A_TO_N[in_put],1,PLAINTEXT[0])
-                                in_two = roller(ROLLER[choose_roller[1]],A_TO_N[ROLLER_START_TEMP[1]],in_one,1,PLAINTEXT[0])
-                                in_three = roller(ROLLER[choose_roller[0]],A_TO_N[ROLLER_START_TEMP[0]],in_two,1,PLAINTEXT[0])
-                                ref = A_TO_N[reflector(UKW_B,in_three)]
-                                out_three = roller(ROLLER[choose_roller[0]],A_TO_N[ROLLER_START_TEMP[0]],ref,2,PLAINTEXT[0])
-                                out_two = roller(ROLLER[choose_roller[1]],A_TO_N[ROLLER_START_TEMP[1]],out_three,2,PLAINTEXT[0])
-                                out_one = roller(ROLLER[choose_roller[2]],A_TO_N[ROLLER_START_TEMP[2]],out_two,2,PLAINTEXT[0])
-                                ori = [enum,List]
-                                ans = [N_TO_A[out_one],GUESSTEXT[0]]
-                                c = ['','']
-                                c[0] = ori
-                                c[1] = ans
-                                fw.write(str(c))
-                                fw.write('\n')
+                for line in iter(fp):
+                    line = line.strip('\n')
+                    if line == str(-1) or line == '\n':
+                        step = 0
+                        if line == str(-1):
+                            new.write(str(-1))
+                            new.write(str('\n'))
+                        continue
+                    elif step == 0:
+                        ROLLER_START = line                
+                        ROLLER_START = ast.literal_eval(ROLLER_START)
+                        ROLLER_START_TEMP[0]=ROLLER_START[0]
+                        ROLLER_START_TEMP[1]=ROLLER_START[1]
+                        ROLLER_START_TEMP[2]=ROLLER_START[2]
+                        ROLLER_START_TEMP[2] = N_TO_A[A_TO_N[ROLLER_START_TEMP[2]]+1] if(A_TO_N[ROLLER_START_TEMP[2]]+1<26) else N_TO_A[0]#每輸入一個動一格
+                        if A_TO_N[ROLLER_START_TEMP[1]] == (A_TO_N[ROLLER_ARROW[1]]-1 or A_TO_N[ROLLER_ARROW[1]]+25):#如果中間的轉盤起始位置是指針位置前一個，最後一個轉盤跟中間轉盤都會動一格(指針為A,起始位置為Z要另外處理)
+                            ROLLER_START_TEMP[1] = N_TO_A[A_TO_N[ROLLER_START_TEMP[1]]+1] if(A_TO_N[ROLLER_START_TEMP[1]]+1<26) else N_TO_A[0]
+                            ROLLER_START_TEMP[0] = N_TO_A[A_TO_N[ROLLER_START_TEMP[0]]+1] if(A_TO_N[ROLLER_START_TEMP[0]]+1<26) else N_TO_A[0]
+                        if ROLLER_START_TEMP[2] == ROLLER_ARROW[2]:#
+                            ROLLER_START_TEMP[1] = N_TO_A[A_TO_N[ROLLER_START_TEMP[1]]+1] if(A_TO_N[ROLLER_START_TEMP[1]]+1<26) else N_TO_A[0]
+                        print('------',ROLLER_START_TEMP)
+                        new.write(str(ROLLER_START_TEMP))
+                        new.write('\n')
+                        count = count + 1
+                        step = 1
+                    elif step == 1:
+                        plugboard_list = ast.literal_eval(line)
+                        letter = list(PLAINTEXT[3])
+                        letter.append(PLUGBOARD)
+                        for List in itertools.product(*letter):
+                            plugboard_list_temp = plugboard_list
+                            i = check_list(plugboard_list_temp,List)
+                            if i==-1:
+                                continue
+                            elif i == 0:
+                                plugboard_list_temp.append(list(List))
+                            in_put = List[1]#輸入字母經過接線板後的字母
+                            in_one = roller(ROLLER[choose_roller[2]],A_TO_N[ROLLER_START_TEMP[2]],A_TO_N[in_put],1,PLAINTEXT[4])
+                            in_two = roller(ROLLER[choose_roller[1]],A_TO_N[ROLLER_START_TEMP[1]],in_one,1,PLAINTEXT[4])
+                            in_three = roller(ROLLER[choose_roller[0]],A_TO_N[ROLLER_START_TEMP[0]],in_two,1,PLAINTEXT[4])
+                            ref = A_TO_N[reflector(UKW_B,in_three)]
+                            out_three = roller(ROLLER[choose_roller[0]],A_TO_N[ROLLER_START_TEMP[0]],ref,2,PLAINTEXT[4])
+                            out_two = roller(ROLLER[choose_roller[1]],A_TO_N[ROLLER_START_TEMP[1]],out_three,2,PLAINTEXT[4])
+                            out_one = roller(ROLLER[choose_roller[2]],A_TO_N[ROLLER_START_TEMP[2]],out_two,2,PLAINTEXT[4])                                
+                            ans = [N_TO_A[out_one],GUESSTEXT[4]]
+                            test = check_list(list(plugboard_list_temp),ans)
+                            if -1 == test:
+                                continue
+                            elif 0 == test:
+                                plugboard_list_temp.append(ans)
+                            new.write(str(plugboard_list_temp))
+                            new.write('\n')
+                        #new.write(str(-1))
+                        #new.write('\n')
+    fw.write(str(count))
+    fw.close
+    fp.close()
+    new.close()
+
+
+
+
+
+
+                #for roller_start_one in range (A_TO_N['Z']+1):#3個轉盤起始位置變動
+                #    for roller_start_two in range (A_TO_N['Z']+1):
+                #        for roller_start_three in range (A_TO_N['Z']+1):
+                #            ROLLER_START[0] = N_TO_A[roller_start_one]
+                #            ROLLER_START[1] = N_TO_A[roller_start_two]
+                #            ROLLER_START[2] = N_TO_A[roller_start_three]
+                #            ROLLER_START_TEMP[0]=ROLLER_START[0]
+                #            ROLLER_START_TEMP[1]=ROLLER_START[1]
+                #            ROLLER_START_TEMP[2]=ROLLER_START[2]
+                #            print('------',ROLLER_START)
+                #            fw.write(str(ROLLER_START))
+                #            fw.write('\n')
+                #            letter = ['I']
+                #            letter.append(PLUGBOARD)
+                #            for enum ,List in itertools.product(*letter):
+                #                ROLLER_START_TEMP[2] = N_TO_A[A_TO_N[ROLLER_START_TEMP[2]]+1] if(A_TO_N[ROLLER_START_TEMP[2]]+1<26) else N_TO_A[0]#每輸入一個動一格
+                #                if A_TO_N[ROLLER_START_TEMP[1]] == (A_TO_N[ROLLER_ARROW[1]]-1 or A_TO_N[ROLLER_ARROW[1]]+25):#如果中間的轉盤起始位置是指針位置前一個，最後一個轉盤跟中間轉盤都會動一格(指針為A,起始位置為Z要另外處理)
+                #                    ROLLER_START_TEMP[1] = N_TO_A[A_TO_N[ROLLER_START_TEMP[1]]+1] if(A_TO_N[ROLLER_START_TEMP[1]]+1<26) else N_TO_A[0]
+                #                    ROLLER_START_TEMP[0] = N_TO_A[A_TO_N[ROLLER_START_TEMP[0]]+1] if(A_TO_N[ROLLER_START_TEMP[0]]+1<26) else N_TO_A[0]
+                #                if ROLLER_START_TEMP[2] == ROLLER_ARROW[2]:#
+                #                   ROLLER_START_TEMP[1] = N_TO_A[A_TO_N[ROLLER_START_TEMP[1]]+1] if(A_TO_N[ROLLER_START_TEMP[1]]+1<26) else N_TO_A[0]
+                #                in_put = List#輸入字母經過接線板後的字母
+                #                in_one = roller(ROLLER[choose_roller[2]],A_TO_N[ROLLER_START_TEMP[2]],A_TO_N[in_put],1,PLAINTEXT[0])
+                #                in_two = roller(ROLLER[choose_roller[1]],A_TO_N[ROLLER_START_TEMP[1]],in_one,1,PLAINTEXT[0])
+                #                in_three = roller(ROLLER[choose_roller[0]],A_TO_N[ROLLER_START_TEMP[0]],in_two,1,PLAINTEXT[0])
+                #                ref = A_TO_N[reflector(UKW_B,in_three)]
+                #                out_three = roller(ROLLER[choose_roller[0]],A_TO_N[ROLLER_START_TEMP[0]],ref,2,PLAINTEXT[0])
+                #                out_two = roller(ROLLER[choose_roller[1]],A_TO_N[ROLLER_START_TEMP[1]],out_three,2,PLAINTEXT[0])
+                #                out_one = roller(ROLLER[choose_roller[2]],A_TO_N[ROLLER_START_TEMP[2]],out_two,2,PLAINTEXT[0])
+                #                ori = [enum,List]0
+
+                #                ans = [N_TO_A[out_one],GUESSTEXT[0]]
+                #                c = ['','']
+                #                c[0] = ori
+                #                c[1] = ans
+                #                fw.write(str(c))
+                #                fw.write('\n')
 
 if __name__ == '__main__':
-    main()
+    #main()
     second()
