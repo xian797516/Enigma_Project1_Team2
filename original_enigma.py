@@ -4,12 +4,13 @@ ROLLER = [['E','K','M','F','L','G','D','Q','V','Z','N','T','O','W','Y','H','X','
             ['E','S','O','V','P','Z','J','A','Y','Q','U','I','R','H','X','L','N','F','T','G','K','D','C','M','W','B'],
             ['V','Z','B','R','G','I','T','Y','U','P','S','D','N','H','L','X','A','W','M','J','Q','O','F','E','C','K']]
 
-ROLLER_START = ['A','A','A']#起始位置
+choose_roller = [1, 4, 0]
+ROLLER_START = ['W', 'K', 'K']
+PLUGBOARD = ['A', 'T', 'C', 'C', 'O', 'M', 'G', 'S', 'I', 'J', 'R', 'U', 'F', 'T', 'E', 'T', 'Q', 'K', 'H', 'P', 'L', 'E', 'C', 'X', 'C', 'Z']
 ROLLER_ARROW = ['R','F','W','K','A']#指針位置
-PLUGBOARD = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 UKW_B = ['Y','R','U','H','Q','S','L','D','P','X','N','G','O','K','M','I','E','B','F','Z','C','W','V','J','A','T']#反射器
 
-PLAINTEXT = 'HEILHITLER'
+PLAINTEXT = 'ZATVAWORBRQGRJSXZVNORWZBLORMEGRASLQLAFWXZYODVVTDHCIRDMNWOPNIXVKASIIIALOOSZXAMSYCQHYGPRLMSACGAWPCPAVZTMUUZCTJDVBUZAGFWMIVEZGBTLFIQDPPRZHDNKIPQHUGCXZM'
 CIPHERTEXT = ''
 
 A_TO_N = {'A':0,'B':1,'C':2,'D':3,'E':4,'F':5,'G':6,'H':7,'I':8,'J':9,'K':10,'L':11,'M':12,'N':13,'O':14,'P':15,'Q':16,'R':17,'S':18,'T':19,'U':20,'V':21,'W':22,'X':23,'Y':24,'Z':25}
@@ -41,20 +42,19 @@ def main():
     ROLLER_START_TEMP[0] = ROLLER_START[0]
     ROLLER_START_TEMP[1] = ROLLER_START[1]
     ROLLER_START_TEMP[2] = ROLLER_START[2]
-    choose_roller = [1,0,2]
     for i in range (len(PLAINTEXT)):
         roller0_count += 1
-        ROLLER_START_TEMP[2] = N_TO_A[A_TO_N[ROLLER_START[2]]+roller0_count] if(A_TO_N[ROLLER_START[2]]+roller0_count<26) else N_TO_A[(A_TO_N[ROLLER_START[2]]+roller0_count)%26]#每輸入一個動一格
-        ROLLER_START_TEMP[1] = N_TO_A[A_TO_N[ROLLER_START[1]]+roller1_count] if(A_TO_N[ROLLER_START[1]]+roller1_count<26) else N_TO_A[(A_TO_N[ROLLER_START[1]]+roller1_count)%26]
-        ROLLER_START_TEMP[0] = N_TO_A[A_TO_N[ROLLER_START[0]]+roller2_count] if(A_TO_N[ROLLER_START[0]]+roller2_count<26) else N_TO_A[(A_TO_N[ROLLER_START[0]]+roller2_count)%26]
+        ROLLER_START_TEMP[2] = N_TO_A[(A_TO_N[ROLLER_START[2]]+roller0_count)%26]#每輸入一個動一格
+        ROLLER_START_TEMP[1] = N_TO_A[(A_TO_N[ROLLER_START[1]]+roller1_count)%26]
+        ROLLER_START_TEMP[0] = N_TO_A[(A_TO_N[ROLLER_START[0]]+roller2_count)%26]
         if A_TO_N[ROLLER_START_TEMP[1]] == (A_TO_N[ROLLER_ARROW[choose_roller[1]]]-1 or A_TO_N[ROLLER_ARROW[choose_roller[1]]]+25):#如果中間的轉盤起始位置是指針位置前一個，最後一個轉盤跟中間轉盤都會動一格(指針為A,起始位置為Z要另外處理)
             roller1_count += 1
             roller2_count += 1
-            ROLLER_START_TEMP[1] = N_TO_A[A_TO_N[ROLLER_START[1]]+roller1_count] if(A_TO_N[ROLLER_START[1]]+roller1_count<26) else N_TO_A[(A_TO_N[ROLLER_START[1]]+roller1_count)%26]
-            ROLLER_START_TEMP[0] = N_TO_A[A_TO_N[ROLLER_START[0]]+roller2_count] if(A_TO_N[ROLLER_START[0]]+roller2_count<26) else N_TO_A[(A_TO_N[ROLLER_START[0]]+roller2_count)%26]
+            ROLLER_START_TEMP[1] = N_TO_A[(A_TO_N[ROLLER_START[1]]+roller1_count)%26]
+            ROLLER_START_TEMP[0] = N_TO_A[(A_TO_N[ROLLER_START[0]]+roller2_count)%26]
         if ROLLER_START_TEMP[2] == ROLLER_ARROW[choose_roller[2]]:#
             roller1_count += 1
-            ROLLER_START_TEMP[1] = N_TO_A[A_TO_N[ROLLER_START[1]]+roller1_count] if(A_TO_N[ROLLER_START[1]]+roller1_count<26) else N_TO_A[(A_TO_N[ROLLER_START[1]]+roller1_count)%26]
+            ROLLER_START_TEMP[1] = N_TO_A[(A_TO_N[ROLLER_START[1]]+roller1_count)%26]
         #print(ROLLER_START_TEMP)
         in_put = PLUGBOARD[A_TO_N[PLAINTEXT[i]]]#輸入字母經過接線板後的字母
         in_one = roller(ROLLER[choose_roller[2]],A_TO_N[ROLLER_START_TEMP[2]],A_TO_N[in_put],1,PLAINTEXT[i])
