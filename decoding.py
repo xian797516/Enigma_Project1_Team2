@@ -98,7 +98,7 @@ def main():
                                 ROLLER_START[0], ROLLER_START[1] = N_TO_A[(ROLLER_START_ONE + roller0_count) % 26], N_TO_A[(ROLLER_START_TWO + roller1_count) % 26]
                             if ROLLER_START[2] == ROLLER_ARROW[CHOOSE_ROLLER[2]]:#
                                 roller1_count += 1
-                                ROLLER_START[1] = N_TO_A[(ROLLER_START_ONE + roller1_count) % 26]
+                                ROLLER_START[1] = N_TO_A[(ROLLER_START_TWO + roller1_count) % 26]
                         if ROLLER_START == ROLLER_START_GUESS:#找到就把起始位置改掉給等等的enigma用
                             ROLLER_START = [N_TO_A[ROLLER_START_ONE], N_TO_A[ROLLER_START_TWO], N_TO_A[ROLLER_START_THREE]]
                             findit = 1
