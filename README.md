@@ -1,6 +1,6 @@
 # Project2-1_Enigma_machine
 
-##Enigma 基礎
+## Enigma 基礎
 - 接線板，將兩字母相連，可自行設定。ex:A、R，當輸入A時，經過接線板後會變成R。
 ![](https://github.com/cislab-yzu/Project2-1_Enigma_machine/blob/master/Pictures/plugboard.jpg)
 ![](https://github.com/cislab-yzu/Project2-1_Enigma_machine/blob/master/Pictures/inputA.jpg)
@@ -33,7 +33,7 @@
 以此繼續做下去。
 
 
-##想法
+## 解法
 直接從最後10個輸出下手，找出能讓輸入為HEILHITLER時，輸出為IPQHUGCXZM的所有轉盤配置、接線板配置的組合。
 一開始是先從接線板開始配對
 一條接線:A跟B接，A跟C接，...
