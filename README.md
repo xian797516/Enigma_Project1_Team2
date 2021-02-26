@@ -4,12 +4,13 @@
 ### 經過Enigma加密後的密文:
 ZATVAWORBRQGRJSXZVNORWZBLORMEGRASLQLAFWXZYODVVTDHCIRDMNWOPNIXVKASIIIALOOSZXAMSYCQHYGPRLMSACGAWPCPAVZTMUUZCTJDVBUZAGFWMIVEZGBTLFIQDPPRZHDNK
 ### 提示:
-最後10個子母為HEILHETLER加密後的文字
+最後10個字母為HEILHETLER加密後的文字
 ### 目標:
 找出明文
 
 ## Enigma 基礎
 - 接線板，將兩字母相連，可自行設定。ex:A、R，當輸入A時，經過接線板後會變成R。
+
 ![](https://github.com/cislab-yzu/Project2-1_Enigma_machine/blob/master/Pictures/plugboard.jpg)
 ![](https://github.com/cislab-yzu/Project2-1_Enigma_machine/blob/master/Pictures/inputA.jpg)
 - 轉盤，可自行設定轉盤起始位置，轉盤指針位置為固定，轉盤內字母的對應也是固定(非兩字母互相關聯)。
