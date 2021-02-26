@@ -1,6 +1,6 @@
 # Project2-1_Enigma_machine
 
-## 題目
+## 題目:破解Enigma
 ### 經過Enigma加密後的密文:
 ZATVAWORBRQGRJSXZVNORWZBLORMEGRASLQLAFWXZYODVVTDHCIRDMNWOPNIXVKASIIIALOOSZXAMSYCQHYGPRLMSACGAWPCPAVZTMUUZCTJDVBUZAGFWMIVEZGBTLFIQDPPRZHDNK
 ### 提示:
@@ -57,7 +57,8 @@ ZATVAWORBRQGRJSXZVNORWZBLORMEGRASLQLAFWXZYODVVTDHCIRDMNWOPNIXVKASIIIALOOSZXAMSYC
 
 最後再逆推回到148 - 10之後的起始位置，並輸入密文全部之後就是解了，但也沒有找到像是句子的解，所以算是失敗了。
 
-
+## 結果
+雖找出了所有接線板、轉盤、轉盤起始位置、輸入，經過Enigma加密後為題目密文的字串，但卻沒有找出正確答案，猜測可能有在中途切換過轉盤之起始位置。
 
 ## 工作分配
 ###  1051524莊子毅 編寫基本enigma功能 各種plugboard的可能   20%
