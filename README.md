@@ -1,5 +1,13 @@
 # Project2-1_Enigma_machine
 
+## 題目
+### 經過Enigma加密後的密文:
+ZATVAWORBRQGRJSXZVNORWZBLORMEGRASLQLAFWXZYODVVTDHCIRDMNWOPNIXVKASIIIALOOSZXAMSYCQHYGPRLMSACGAWPCPAVZTMUUZCTJDVBUZAGFWMIVEZGBTLFIQDPPRZHDNK
+### 提示:
+最後10個子母為HEILHETLER加密後的文字
+### 目標:
+找出明文
+
 ## Enigma 基礎
 - 接線板，將兩字母相連，可自行設定。ex:A、R，當輸入A時，經過接線板後會變成R。
 ![](https://github.com/cislab-yzu/Project2-1_Enigma_machine/blob/master/Pictures/plugboard.jpg)
